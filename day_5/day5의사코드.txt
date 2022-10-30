@@ -1,0 +1,27 @@
+클래스
+Member
+: 회원 정보
+Coffee
+: 커피 정보
+Order
+: 주문 정보
+
+클래스별 기본 기능
+Controller
+: requestbody 처리하는 곳
+: 요청을 받고 응답을 내보내는 역할
+Service
+: Controller 와 Database 의 중간에서 데이터를 처리하는 역할
+: 내부에 비즈니스 로직 보유. controller의 요구에 따라 알맞는 비즈니스 로직 사용. (contoller 요구 : 비즈니스 로직 = 1 : 1)
+: Controller 에게 requestbody 의 정보에 따라 DB 에 데이터를 저장하거나, DB 에서 데이터를 가져오는 등의 기능을 담당함.
+Dto
+: requestbody 의 정보를 실질적으로 받는 곳
+: 받아서 사용가능한 데이터 형태로 저장(역직렬화)
+: 데이터를 받는 것에 대한 validation 필요
+Entity
+: Controller 에서 제공하는 정보를 받는 곳
+: 다른 클래스명이지만 Dto와 같은 필드를 갖고있다.
+Mapper
+: Dto 를 Entity 로, Entity 를 Dto 로 바꿔주는 기능을 하는 클래스
+: 반환형과 매개변수를 이용해서 각각의 데이터의 참조형을 바꿔주는 역할을 함. (X)
+: MapStruct 라이브러리 사용
