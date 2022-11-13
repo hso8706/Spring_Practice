@@ -6,20 +6,25 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequestMapping("/v1/members")
+@Validated
 public class MemberController {
     //POST
     @PostMapping
-    public ResponseEntity postMember(@RequestBody MemberPostDto memberPostDto){
+    public ResponseEntity postMember(@Valid @RequestBody MemberPostDto memberPostDto){
         return new ResponseEntity(memberPostDto, HttpStatus.CREATED);
     }
     //PATCH
     @PatchMapping("/{member-id}")
-    public ResponseEntity patchMember(@PathVariable("member-id")long memberId,
-                                      @RequestBody MemberPatchDto memberPatchDto){
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+                                      @Valid @RequestBody MemberPatchDto memberPatchDto){
         memberPatchDto.setMemberId(memberId);
         return new ResponseEntity(memberPatchDto, HttpStatus.OK);
     }
@@ -61,4 +66,13 @@ Class MemberController
 
 ResponseEntity
 -JSON + HttpStatus : 반환하길 원하는 값을 JSON 으로 변환한 응답을 생성하고, 동시에 응답 메세지에 HttpStatus 를 묶어주는 객체(참조형).
+
+HttpMessageConverter
+-JSON 반환 방법 : 핸들러 메서드에 @RequestBody 애너테이션이 있거나, ResponseEntity 을 반환형으로 사용하는 경우 내부적으로 HttpMessageConverter 이 작동하여 응답 객체를 JSON 형식으로 바꿔준다.
+
+@Valid
+-Validation : 애너테이션을 붙인 대상을 유효성 검증하겠다는 의미의 애너테이션
+
+@Validated //TODO 추가 공부 필요
+-Validation : 클래스 단위에 붙이는 애너테이션
 */
